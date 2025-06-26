@@ -1,3 +1,5 @@
+// @ts-ignore: Importing tailwindcss plugin for Vite, type definitions may be missing
+import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
 import { defineConfig, externalizeDepsPlugin } from 'electron-vite'
 import { resolve } from 'path'
@@ -16,7 +18,7 @@ export default defineConfig({
     plugins: [externalizeDepsPlugin()]
   },
   renderer: {
-    assetsInclude: ['src/renderer/src/assets/**', 'src/renderer/assets/**'],
+    assetsInclude: ['src/renderer/assets/**'],
     resolve: {
       alias: {
         '@renderer': resolve('src/renderer/src'),
@@ -25,6 +27,6 @@ export default defineConfig({
         '@app': resolve('src/renderer/src/app')
       }
     },
-    plugins: [react()]
+    plugins: [react(), tailwindcss()]
   }
 })
