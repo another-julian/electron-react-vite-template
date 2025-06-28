@@ -1,7 +1,35 @@
-import { app, shell, BrowserWindow, ipcMain } from 'electron'
-import { join } from 'path'
-import { electronApp, optimizer, is } from '@electron-toolkit/utils'
+import { electronApp, is, optimizer } from '@electron-toolkit/utils'
+import { app, BrowserWindow, ipcMain, shell } from 'electron'
+import path, { join } from 'path'
 import icon from '../../resources/icon.png?asset'
+import {
+  addProject,
+  deleteProject,
+  deleteProjects,
+  getProjects,
+  updateProject
+} from './lib/projectStorage'
+
+const filePath = path.join(app.getPath('userData'), 'projects.json')
+console.log('Ruta del archivo de proyectos:', filePath)
+
+ipcMain.handle('get-projects', () => getProjects())
+ipcMain.handle('add-project', (event, project) => {
+  addProject(project)
+  return true
+})
+ipcMain.handle('delete-project', (event, id) => {
+  deleteProject(id)
+  return true
+})
+ipcMain.handle('delete-projects', (event, ids) => {
+  deleteProjects(ids)
+  return true
+})
+ipcMain.handle('update-project', (event, updatedProject) => {
+  updateProject(updatedProject)
+  return true
+})
 
 function createWindow(): void {
   // Create the browser window.

@@ -1,13 +1,16 @@
 import { JSX } from 'react'
-import Layout from './app/Layout'
-import View from './app/View'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import Layout from './app/views/projects/Layout'
+import View from './app/views/projects/View'
 
 export default function App(): JSX.Element {
   return (
-    <div>
-      <Layout>
-        <View />
-      </Layout>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<View />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   )
 }
